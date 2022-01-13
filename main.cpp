@@ -11,6 +11,7 @@ and may not be redistributed without written permission.*/
 #include <fstream>
 #include <string>
 
+
 #include "main.h"
 #include "goblin.h"
 #include "ltexture.h"
@@ -107,7 +108,7 @@ int scoreThisLife;
 Uint32 lastTick;
 
 int level;
-const int MAX_LEVEL = 4;
+const int MAX_LEVEL = 5;
 
 /* * * *  * * *  * * *  Sets up SDL including font and image libraries  * * *  * * *  * * *  * * * */
 bool init()
@@ -532,6 +533,16 @@ void update()
             userCoords.y = userData.y;
             if (checkMapCollision(&tileMap, &userCoords))
             {
+
+                bool xIsclosestToEdge = abs(SCREEN_TILE_SIZE / 2 - (userData.x % SCREEN_TILE_SIZE)) > abs(SCREEN_TILE_SIZE / 2 - (userData.y % SCREEN_TILE_SIZE));
+                if (xIsclosestToEdge)
+                {
+                    userData.x = round(static_cast<double>(userData.x) + SCREEN_TILE_SIZE / 2) / static_cast<double>(SCREEN_TILE_SIZE) * SCREEN_TILE_SIZE- SCREEN_TILE_SIZE/2;
+                }
+                else
+                {
+                    userData.y = round(static_cast<double>(userData.y) + SCREEN_TILE_SIZE / 2) / static_cast<double>(SCREEN_TILE_SIZE) * SCREEN_TILE_SIZE - SCREEN_TILE_SIZE/2;
+                }
                 userData.state = BOUNCING;
                 userData.direction = getOppositeDirection(userData.direction);
             }

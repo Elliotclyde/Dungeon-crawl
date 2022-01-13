@@ -2,8 +2,14 @@
 #include <cmath>
 #include "collision.h"
 
+const int marginOfError = SCREEN_TILE_SIZE/10;
+
 bool checkMapCollision(BackgroundTile (*currentTileMap)[TILE_MAP_WIDTH][TILE_MAP_HEIGHT], coord *inputCoords)
 {
+    if(inputCoords->x % SCREEN_TILE_SIZE == 0 && inputCoords->y % SCREEN_TILE_SIZE == 0){
+        return false;
+    }
+
     coord coords = getTopLeftBoxForUser(inputCoords);
     // check if out of bounds.
     if (coords.x < 0 ||
